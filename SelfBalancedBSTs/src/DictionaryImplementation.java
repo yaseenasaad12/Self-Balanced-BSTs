@@ -8,9 +8,13 @@ public class DictionaryImplementation {
 
     public DictionaryImplementation(String typeD) {
         switch (typeD) {
-            case "AVL" -> dictionary = new AVL<>();
-            case "Red Black Tree" -> dictionary = new RedBlackTree<>();
-            default -> throw new IllegalArgumentException("Invalid dictionary type.");
+            case "AVL" : {dictionary = new AVL<>();
+                break;
+            }
+            case "Red Black Tree" : {dictionary = new RedBlackTree<>();
+                break;
+            }
+            default : throw new IllegalArgumentException("Invalid dictionary type.");
         }  
     }
     public synchronized void insert(String toInsert) {

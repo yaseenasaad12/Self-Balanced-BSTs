@@ -1,6 +1,6 @@
 package BSTs;
 
-public class RedBlackTree<T> implements Trees<T> {
+public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     Node root;
     int size; 
     
@@ -14,6 +14,7 @@ public class RedBlackTree<T> implements Trees<T> {
             this.key = key;
             this.colour = "RED";
             this.left = this.right = null;
+            this.parent = null;
         }
     }
 
@@ -73,7 +74,7 @@ public class RedBlackTree<T> implements Trees<T> {
 
         while (x != null) {
             y = x;
-            if (z.key.hashCode() < x.key.hashCode()) {
+            if (z.key.compareTo(x.key) < 0) {
                 x = x.left;
             } else {
                 x = x.right;
@@ -82,7 +83,7 @@ public class RedBlackTree<T> implements Trees<T> {
         z.parent = y;
         if (y == null) {
             this.root = z;
-        } else if (z.key.hashCode() < y.key.hashCode()) {
+        } else if (z.key.compareTo(y.key) < 0) {
             y.left = z;
         } else {
             y.right = z;
@@ -143,7 +144,7 @@ public class RedBlackTree<T> implements Trees<T> {
         if (node == null || key.equals(node.key)) {
             return node != null;
         }
-        if (key.hashCode() < node.key.hashCode()) {
+        if (key.compareTo(node.key) < 0) {
             return search(key, node.left);
         } else {
             return search(key, node.right);
@@ -168,7 +169,7 @@ public class RedBlackTree<T> implements Trees<T> {
         while (node != null) {
             if (key.equals(node.key)) {
                 return node;
-            } else if (key.hashCode() < node.key.hashCode()) {
+            } else if (key.compareTo(node.key) < 0) {
                 node = node.left;
             } else {
                 node = node.right;

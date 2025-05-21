@@ -79,15 +79,15 @@ public class App {
 
     private void handleUserChoice(int choice) {
         switch (choice) {
-            case 1 -> handleInsert();
-            case 2 -> handleDelete();
-            case 3 -> handleSearch();
-            case 4 -> handleBatchInsert();
-            case 5 -> handleBatchDelete();
-            case 6 -> handleSize();
-            case 7 -> handleHeight();
-            case 8 -> exitProgram();
-            default -> System.out.print(RED + "Error!! Please enter a valid option\n" + RESET);
+            case 1: {handleInsert(); break;}
+            case 2: {handleDelete();break;}
+            case 3: {handleSearch();break;}
+            case 4: {handleBatchInsert();break;}
+            case 5: {handleBatchDelete();break;}
+            case 6: {handleSize();break;}
+            case 7: {handleHeight();break;}
+            case 8: {exitProgram();break;}
+            default: System.out.print(RED + "Error!! Please enter a valid option\n" + RESET);
         }
     }
 
