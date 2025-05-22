@@ -21,8 +21,8 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     public RedBlackTree() {
         this.TNULL = new Node(null);
         this.TNULL.colour = "BLACK";
-        this.TNULL.left = null;
-        this.TNULL.right = null;
+        this.TNULL.left = TNULL;
+        this.TNULL.right = TNULL;
         this.root = TNULL;
         this.size = 0;
     }
@@ -30,11 +30,11 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     public void leftRotate(Node x) {
         Node y = x.right;
         x.right = y.left;
-        if (y.left != null) {
+        if (y.left != TNULL) {
             y.left.parent = x;
         }
         y.parent = x.parent;
-        if (x.parent == null) {
+        if (x.parent == TNULL) {
             this.root = y;
         } else if (x == x.parent.left) {
             x.parent.left = y;
@@ -48,11 +48,11 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     public void rightRotate(Node x) {
         Node y = x.left;
         x.left = y.right;
-        if (y.right != null) {
+        if (y.right != TNULL) {
             y.right.parent = x;
         }
         y.parent = x.parent;
-        if (x.parent == null) {
+        if (x.parent == TNULL) {
             this.root = y;
         } else if (x == x.parent.right) {
             x.parent.right = y;
@@ -75,7 +75,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         Node z = new Node(key);
         z.left = this.TNULL;
         z.right = this.TNULL;
-        Node y = null;
+        Node y = TNULL;
         Node x = this.root;
 
         while (x != this.TNULL) {
@@ -87,7 +87,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
             }
         }
         z.parent = y;
-        if (y == null) {
+        if (y == TNULL) {
             this.root = z;
         } else if (z.key.compareTo(y.key) < 0) {
             y.left = z;
@@ -162,7 +162,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     } 
 
     public void transplant(Node u, Node v) {
-        if (u.parent == null) {
+        if (u.parent == TNULL) {
             this.root = v;
         } else if (u == u.parent.left) {
             u.parent.left = v;
@@ -310,6 +310,18 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         }
         return Math.max(height(node.left), height(node.right)) + 1;
     }
+
+    
+public void inorderTraversal(java.util.function.Consumer<T> consumer) {
+    inorderTraversal(root, consumer);
+}
+
+private void inorderTraversal(Node node, java.util.function.Consumer<T> consumer) {
+    if (node == this.TNULL) return;
+    inorderTraversal(node.left, consumer);
+    consumer.accept(node.key);
+    inorderTraversal(node.right, consumer);
+}
 
     @Override
     public void printdictinory() {

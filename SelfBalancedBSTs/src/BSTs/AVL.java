@@ -304,7 +304,17 @@ public class AVL<T extends Comparable<T>> implements Trees<T> {
             inorderPrint(node.right);
         }
     }
+    
+public void inorderTraversal(java.util.function.Consumer<T> consumer) {
+    inorderTraversal(root, consumer);
+}
 
+private void inorderTraversal(Node node, java.util.function.Consumer<T> consumer) {
+    if (node == null) return;
+    inorderTraversal(node.left, consumer);
+    consumer.accept(node.key);
+    inorderTraversal(node.right, consumer);
+}
   
 
 

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import BSTs.AVL;
 
+
 public class AVLtests {
     private AVL<Integer> avl;
 
@@ -50,33 +51,55 @@ public class AVLtests {
     }
 
     @Test
-    public void testHeightAndBalance() {
-        avl.insert(30);
-        avl.insert(20);
-        avl.insert(10); // Causes right rotation
-        assertTrue(avl.height() <= 2);
-        avl.insert(25);
-        avl.insert(5);
-        avl.insert(35);
-        avl.insert(40); // Causes left rotation
-        assertTrue(avl.height() <= 3);
-    }
+    public void testHeight() {
+
+            final int N = 1000;
+            int[] data = new int[N];
+            java.util.Random rand = new java.util.Random(123);
+            for (int i = 0; i < N; i++) {
+                data[i] = rand.nextInt();
+            }
+            BSTs.AVL<Integer> avl = new BSTs.AVL<>();
+        
+            for (int value : data) {
+                avl.insert(value);
+            }
+            int avlHeight = avl.height();
+        
+            // Theoretical max height for AVL: ~1.44*log2(N+2)-0.328
+            double avlMax = 1.44 * (Math.log(N + 2) / Math.log(2)) - 0.328;
+        
+            assertTrue("AVL height too large: " + avlHeight, avlHeight <= avlMax + 1);
+        }
 
     @Test
-    public void testInorderTraversal() {
-        avl.insert(3);
-        avl.insert(1);
-        avl.insert(2);
-        avl.insert(5);
-        avl.insert(4);
+    public void testInsertionAndDeletionCorrectness() {
+        final int N = 200;
+        java.util.Random rand = new java.util.Random(456);
+        java.util.Set<Integer> set = new java.util.TreeSet<>();
+        AVL<Integer> avl = new AVL<>();
 
-        // Capture in-order output
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
-        avl.inorder();
-        System.setOut(System.out);
+        for (int i = 0; i < N; i++) {
+            int num = rand.nextInt(1000);
+            set.add(num);
+            avl.insert(num);
+        }
 
-        String output = out.toString().trim().replaceAll("\\s+", " ");
-        assertEquals("1 2 3 4 5", output);
+        java.util.List<Integer> inorder = new java.util.ArrayList<>();
+        avl.inorderTraversal(x -> inorder.add(x));
+        java.util.List<Integer> sorted = new java.util.ArrayList<>(set);
+        assertEquals(sorted, inorder);
+
+        int count = 0;
+        for (Integer num : sorted) {
+            if (count++ % 2 == 0) {
+                avl.delete(num);
+                set.remove(num);
+            }
+        }
+        inorder.clear();
+        avl.inorderTraversal(x -> inorder.add(x));
+        sorted = new java.util.ArrayList<>(set);
+        assertEquals(sorted, inorder);
     }
 }
