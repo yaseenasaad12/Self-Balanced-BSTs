@@ -1,8 +1,11 @@
 package BSTs;
 
+import javafx.scene.paint.Color;
+
 public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     Node root;
-    int size; 
+    int size;
+    Node TNULL; 
     
     private class Node {
         T key;
@@ -19,7 +22,11 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     }
 
     public RedBlackTree() {
-        this.root = null;
+        this.TNULL = new Node(null);
+        this.TNULL.colour = "BLACK";
+        this.TNULL.left = null;
+        this.TNULL.right = null;
+        this.root = TNULL;
         this.size = 0;
     }
 
@@ -69,10 +76,12 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
             return false;
         }
         Node z = new Node(key);
+        z.left = this.TNULL;
+        z.right = this.TNULL;
         Node y = null;
         Node x = this.root;
 
-        while (x != null) {
+        while (x != this.TNULL) {
             y = x;
             if (z.key.compareTo(x.key) < 0) {
                 x = x.left;
@@ -88,6 +97,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         } else {
             y.right = z;
         }
+        
         insertFixup(z);
         this.size++;
         return true;
@@ -97,7 +107,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         while (z.parent != null && z.parent.colour.equals("RED")) {
             if (z.parent == z.parent.parent.left) {
                 Node y = z.parent.parent.right;
-                if (y != null && y.colour.equals("RED")) {
+                if (y.colour.equals("RED")) {
                     z.parent.colour = "BLACK";
                     y.colour = "BLACK";
                     z.parent.parent.colour = "RED";
@@ -113,7 +123,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
                 }
             } else {
                 Node y = z.parent.parent.left;
-                if (y != null && y.colour.equals("RED")) {
+                if (y.colour.equals("RED")) {
                     z.parent.colour = "BLACK";
                     y.colour = "BLACK";
                     z.parent.parent.colour = "RED";
@@ -128,6 +138,9 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
                     leftRotate(z.parent.parent);
                 }
             }
+            if(z == this.root) {
+                break;
+            }
         }
         this.root.colour = "BLACK";
     }
@@ -141,8 +154,8 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     }
 
     public boolean search(T key, Node node) {
-        if (node == null || key.equals(node.key)) {
-            return node != null;
+        if (node == this.TNULL || key.equals(node.key)) {
+            return node != this.TNULL;
         }
         if (key.compareTo(node.key) < 0) {
             return search(key, node.left);
@@ -159,14 +172,13 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         } else {
             u.parent.right = v;
         }
-        if (v != null) {
-            v.parent = u.parent;
-        }
+        v.parent = u.parent;
+
     }   
 
     public Node getNode(T key) {
         Node node = this.root;
-        while (node != null) {
+        while (node != this.TNULL) {
             if (key.equals(node.key)) {
                 return node;
             } else if (key.compareTo(node.key) < 0) {
@@ -179,7 +191,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     }
 
     public Node minimum(Node node) {
-        while (node.left != null) {
+        while (node.left != this.TNULL) {
             node = node.left;
         }
         return node;
@@ -199,10 +211,10 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         String yOriginalColour = y.colour;
         Node x;
 
-        if (z.left == null) {
+        if (z.left == this.TNULL) {
             x = z.right;
             transplant(z, z.right);
-        } else if (z.right == null) {
+        } else if (z.right == this.TNULL) {
             x = z.left;
             transplant(z, z.left);
         } else {
@@ -229,7 +241,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     }
 
     public void deleteFixup(Node x) {
-        while (x != this.root && (x == null || x.colour.equals("BLACK"))) {
+        while (x != this.root &&  x.colour.equals("BLACK")) {
             if (x == x.parent.left) {
                 Node w = x.parent.right;
                 if (w.colour.equals("RED")) {
@@ -238,23 +250,19 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
                     leftRotate(x.parent);
                     w = x.parent.right;
                 }
-                if ((w.left == null || w.left.colour.equals("BLACK")) && (w.right == null || w.right.colour.equals("BLACK"))) {
+                if (w.left.colour.equals("BLACK") && w.right.colour.equals("BLACK")) {
                     w.colour = "RED";
                     x = x.parent;
                 } else {
-                    if (w.right == null || w.right.colour.equals("BLACK")) {
-                        if (w.left != null) {
-                            w.left.colour = "BLACK";
-                        }
+                    if (w.right.colour.equals("BLACK")) {
+                        w.left.colour = "BLACK";
                         w.colour = "RED";
                         rightRotate(w);
                         w = x.parent.right;
                     }
                     w.colour = x.parent.colour;
                     x.parent.colour = "BLACK";
-                    if (w.right != null) {
-                        w.right.colour = "BLACK";
-                    }
+                    w.right.colour = "BLACK";
                     leftRotate(x.parent);
                     x = this.root;
                 }
@@ -266,31 +274,27 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
                     rightRotate(x.parent);
                     w = x.parent.left;
                 }
-                if ((w.right == null || w.right.colour.equals("BLACK")) && (w.left == null || w.left.colour.equals("BLACK"))) {
+                if (w.right.colour.equals("BLACK") &&  w.left.colour.equals("BLACK")) {
                     w.colour = "RED";
                     x = x.parent;
                 } else {
-                    if (w.left == null || w.left.colour.equals("BLACK")) {
-                        if (w.right != null) {
-                            w.right.colour = "BLACK";
-                        }
+                    if (w.left.colour.equals("BLACK")) {
+                        w.right.colour = "BLACK";
                         w.colour = "RED";
                         leftRotate(w);
                         w = x.parent.left;
                     }
                     w.colour = x.parent.colour;
                     x.parent.colour = "BLACK";
-                    if (w.left != null) {
-                        w.left.colour = "BLACK";
-                    }
+                    w.left.colour = "BLACK";
                     rightRotate(x.parent);
                     x = this.root;
                 }
             }
         }
-        if (x != null) {
-            x.colour = "BLACK";
-        }
+
+        x.colour = "BLACK";
+
     }
 
     @Override
@@ -304,7 +308,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     }
 
     public int height(Node node) {
-        if (node == null) {
+        if (node == this.TNULL) {
             return 0;
         }
         return Math.max(height(node.left), height(node.right)) + 1;
