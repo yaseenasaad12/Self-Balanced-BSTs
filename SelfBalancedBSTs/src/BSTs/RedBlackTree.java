@@ -1,7 +1,4 @@
 package BSTs;
-
-import javafx.scene.paint.Color;
-
 public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     Node root;
     int size;
