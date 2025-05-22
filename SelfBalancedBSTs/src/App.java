@@ -8,7 +8,7 @@ public class App {
     private static final String RED = "\u001B[31m";
     private static final String BLACK_BG = "\u001B[40m";
 
-    private Scanner scanner;
+    private Scanner scanner; 
     private DictionaryImplementation dictionary;
 
     public static void main(String[] args) {
