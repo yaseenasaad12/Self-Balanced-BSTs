@@ -23,7 +23,7 @@ public class AVL<T extends Comparable<T>> implements Trees<T> {
 
     // Get height of a node (handles null case)
     private int height(Node node) {
-        if (node == null) return 0;
+        if (node == null) return -1;
         return node.height;
     }
 
@@ -305,7 +305,7 @@ public class AVL<T extends Comparable<T>> implements Trees<T> {
         }
     }
     
-public void inorderTraversal(java.util.function.Consumer<T> consumer) {
+/* public void inorderTraversal(java.util.function.Consumer<T> consumer) {
     inorderTraversal(root, consumer);
 }
 
@@ -314,6 +314,41 @@ private void inorderTraversal(Node node, java.util.function.Consumer<T> consumer
     inorderTraversal(node.left, consumer);
     consumer.accept(node.key);
     inorderTraversal(node.right, consumer);
+} */
+
+
+private void printTreeHelper(Node node, String indent, boolean last) {
+        if (node != null) {
+            System.out.println(indent + (last ? "└── " : "├── ") + node.key + " (h=" + node.height + ")");
+            if (node.left != null || node.right != null) {
+                if (node.right != null) {
+                    printTreeHelper(node.right, indent + (last ? "    " : "│   "), node.left == null);
+                }
+                if (node.left != null) {
+                    printTreeHelper(node.left, indent + (last ? "    " : "│   "), true);
+                }
+            }
+        }
+    }
+    @Override
+       public void printTreeStructure() {
+        System.out.println("Tree structure:");
+        printTreeHelper(root, "", true);
+    }
+
+    public static void main(String[] args) {
+    AVL<Integer> avl = new AVL<>();
+    
+    avl.insert(41);
+    avl.insert(38);
+    avl.insert(31);
+    avl.insert(12);
+    avl.insert(19);
+    avl.insert(8);
+    
+    System.out.println("Tree height: " + avl.height()); // Should print 1
+    avl.printTreeStructure(); // Visual representation
+    avl.inorder(); // Should print: 31 38 41
 }
   
 
