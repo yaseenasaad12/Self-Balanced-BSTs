@@ -1,0 +1,17 @@
+Test_Type,Data_Size,Data_Pattern,RBT_Insert_Time(ms),AVL_Insert_Time(ms),RBT_Search_Time(ms),AVL_Search_Time(ms),RBT_Delete_Time(ms),AVL_Delete_Time(ms),RBT_Height,AVL_Height,RBT_Memory_Efficiency,AVL_Memory_Efficiency
+Small Dataset,100,Random,0,2,0,0,0,0,7,7,100.00,100.00
+Very Large Dataset,50000,Random,30,26,15,17,23,28,18,18,88.89,88.89
+Pattern_Test,10000,Reverse_Sorted,2,1,1,1,2,3,22,13,63.64,107.69
+Extra Large Dataset,100000,Random,46,53,45,34,59,67,20,19,85.00,89.47
+Large Dataset,10000,Random,3,3,1,1,3,3,15,15,93.33,93.33
+Scalability_Test,500,Random,0,0,0,0,0,0,10,10,90.00,90.00
+Scalability_Test,1000,Random,0,0,0,0,0,0,11,11,90.91,90.91
+Scalability_Test,2000,Random,0,0,0,0,0,0,12,12,91.67,91.67
+Scalability_Test,5000,Random,1,1,0,0,1,1,14,14,92.86,92.86
+Scalability_Test,10000,Random,4,3,1,1,2,3,15,15,93.33,93.33
+Scalability_Test,20000,Random,6,7,3,3,7,8,16,16,93.75,93.75
+Scalability_Test,50000,Random,21,22,12,12,24,30,18,18,88.89,88.89
+Pattern_Test,10000,Duplicate_Heavy,1,1,1,1,0,0,11,11,127.27,127.27
+Pattern_Test,10000,Random,3,3,1,1,4,6,15,15,93.33,93.33
+Medium Dataset,1000,Random,0,0,0,0,0,0,11,11,90.91,90.91
+Pattern_Test,10000,Sorted,1,1,0,0,3,5,22,13,63.64,107.69
