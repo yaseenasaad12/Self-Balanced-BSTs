@@ -305,7 +305,7 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
     }
 
     public int height(Node node) {
-        if (node == this.TNULL) {
+        if (node.left == this.TNULL || node.right == this.TNULL) {
             return 0;
         }
         return Math.max(height(node.left), height(node.right)) + 1;
