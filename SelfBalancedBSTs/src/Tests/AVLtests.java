@@ -74,7 +74,7 @@ public class AVLtests {
 
     @Test
     public void testInsertionAndDeletionCorrectness() {
-        final int N = 200;
+        final int N = 2000;
         java.util.Random rand = new java.util.Random(456);
         java.util.Set<Integer> set = new java.util.TreeSet<>();
         AVL<Integer> avl = new AVL<>();

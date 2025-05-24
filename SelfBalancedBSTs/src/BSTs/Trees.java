@@ -6,7 +6,7 @@ public interface Trees<T extends Comparable<T>>  {
     boolean search(T key);
     int size();
     int height();
-    void printdictinory();
-    void printTreeStructure() ;
+  
+
 
 }

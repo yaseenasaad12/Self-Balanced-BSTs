@@ -26,8 +26,8 @@ public class DictionaryImplementation {
         } else {
             System.out.println("\u001B[33m Already Exist\u001B[0m ");
         }
-        dictionary.printdictinory();
-        dictionary.printTreeStructure();
+        // dictionary.printdictinory();
+        // dictionary.printTreeStructure();
         long end = System.nanoTime();
         System.out.println("Insert Time: " + (end - start) / 1_000_000.0 + " ms");
     }

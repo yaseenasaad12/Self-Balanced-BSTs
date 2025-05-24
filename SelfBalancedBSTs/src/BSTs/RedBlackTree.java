@@ -323,17 +323,6 @@ private void inorderTraversal(Node node, java.util.function.Consumer<T> consumer
     inorderTraversal(node.right, consumer);
 }
 
-    @Override
-    public void printdictinory() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'printdictinory'");
-    }
 
-    @Override
-    public void printTreeStructure() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'printTreeStructure'");
-    }
-    
 }
 
