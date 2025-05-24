@@ -97,4 +97,62 @@ public class RBTtests {
         assertEquals(sorted, inorder);
     }
     
+    @Test
+    public void testInsertDuplicates() {
+        RedBlackTree<Integer> rbt = new RedBlackTree<>();
+        assertTrue(rbt.insert(42));
+        assertFalse(rbt.insert(42)); // Duplicate insert should return false
+        assertEquals(1, rbt.size());
+    }
+
+    @Test
+    public void testDeleteNonExistent() {
+        RedBlackTree<Integer> rbt = new RedBlackTree<>();
+        rbt.insert(5);
+        rbt.insert(10);
+        assertFalse(rbt.delete(20)); // Deleting non-existent element
+        assertEquals(2, rbt.size());
+    }
+
+    @Test
+    public void testInorderAfterRandomOperations() {
+        RedBlackTree<Integer> rbt = new RedBlackTree<>();
+        java.util.Set<Integer> set = new java.util.TreeSet<>();
+        java.util.Random rand = new java.util.Random(789);
+
+        // Insert random numbers
+        for (int i = 0; i < 100; i++) {
+            int num = rand.nextInt(200);
+            rbt.insert(num);
+            set.add(num);
+        }
+
+        // Delete some numbers
+        int count = 0;
+        for (Integer num : new java.util.ArrayList<>(set)) {
+            if (count++ % 3 == 0) {
+                rbt.delete(num);
+                set.remove(num);
+            }
+        }
+
+        // Compare in-order traversal with sorted set
+        java.util.List<Integer> inorder = new java.util.ArrayList<>();
+        rbt.inorderTraversal(x -> inorder.add(x));
+        java.util.List<Integer> sorted = new java.util.ArrayList<>(set);
+        assertEquals(sorted, inorder);
+    }
+
+    @Test
+    public void testHeightAfterSequentialInsertions() {
+        RedBlackTree<Integer> rbt = new RedBlackTree<>();
+        int N = 100;
+        for (int i = 1; i <= N; i++) {
+            rbt.insert(i);
+        }
+        // Red-Black tree should remain balanced, height should be <= 2*log2(N+1)
+        int height = rbt.height();
+        double maxAllowed = 2 * (Math.log(N + 1) / Math.log(2)) + 1;
+        assertTrue("RBT height too large after sequential insertions: " + height, height <= maxAllowed);
+    }
 }

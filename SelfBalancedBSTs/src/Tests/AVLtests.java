@@ -102,4 +102,63 @@ public class AVLtests {
         sorted = new java.util.ArrayList<>(set);
         assertEquals(sorted, inorder);
     }
+
+    @Test
+    public void testInsertDuplicates() {
+        AVL<Integer> avl = new AVL<>();
+        assertTrue(avl.insert(10));
+        assertFalse(avl.insert(10)); // Duplicate insert should return false
+        assertEquals(1, avl.size());
+    }
+
+    @Test
+    public void testDeleteNonExistent() {
+        AVL<Integer> avl = new AVL<>();
+        avl.insert(5);
+        avl.insert(10);
+        assertFalse(avl.delete(20)); // Deleting non-existent element
+        assertEquals(2, avl.size());
+    }
+
+    @Test
+    public void testInorderAfterRandomOperations() {
+        AVL<Integer> avl = new AVL<>();
+        java.util.Set<Integer> set = new java.util.TreeSet<>();
+        java.util.Random rand = new java.util.Random(789);
+
+        // Insert random numbers
+        for (int i = 0; i < 100; i++) {
+            int num = rand.nextInt(200);
+            avl.insert(num);
+            set.add(num);
+        }
+
+        // Delete some numbers
+        int count = 0;
+        for (Integer num : new java.util.ArrayList<>(set)) {
+            if (count++ % 3 == 0) {
+                avl.delete(num);
+                set.remove(num);
+            }
+        }
+
+        // Compare in-order traversal with sorted set
+        java.util.List<Integer> inorder = new java.util.ArrayList<>();
+        avl.inorderTraversal(x -> inorder.add(x));
+        java.util.List<Integer> sorted = new java.util.ArrayList<>(set);
+        assertEquals(sorted, inorder);
+    }
+
+    @Test
+    public void testHeightAfterSequentialInsertions() {
+        AVL<Integer> avl = new AVL<>();
+        int N = 100;
+        for (int i = 1; i <= N; i++) {
+            avl.insert(i);
+        }
+        // AVL tree should remain balanced, height should be O(log N)
+        int height = avl.height();
+        double maxAllowed = 1.44 * (Math.log(N + 2) / Math.log(2)) - 0.328 + 1;
+        assertTrue("AVL height too large after sequential insertions: " + height, height <= maxAllowed);
+    }
 }
