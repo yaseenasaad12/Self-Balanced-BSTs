@@ -26,10 +26,11 @@ public class DictionaryImplementation {
         } else {
             System.out.println("\u001B[33m Already Exist\u001B[0m ");
         }
-        // dictionary.printdictinory();
+
         // dictionary.printTreeStructure();
         long end = System.nanoTime();
         System.out.println("Insert Time: " + (end - start) / 1_000_000.0 + " ms");
+        dictionary.printdictinory();
     }
 
     public synchronized void delete(String toDelete) {
@@ -41,6 +42,7 @@ public class DictionaryImplementation {
         }
         long end = System.nanoTime();
         System.out.println("Delete Time: " + (end - start) / 1_000_000.0 + " ms");
+                 dictionary.printdictinory();
     }
     
     public boolean search(String toSearch) {
@@ -91,6 +93,7 @@ public class DictionaryImplementation {
         }
         long end = System.nanoTime();
         System.out.println("Batch Insert Time: " + (end - start) / 1_000_000.0 + " ms");
+                 dictionary.printdictinory();
     }
     
     public void batchDelete(String fileToDelete) {
@@ -120,6 +123,7 @@ public class DictionaryImplementation {
         }
         long end = System.nanoTime();
         System.out.println("Batch Delete Time: " + (end - start) / 1_000_000.0 + " ms");
+                 dictionary.printdictinory();
     }
     
 

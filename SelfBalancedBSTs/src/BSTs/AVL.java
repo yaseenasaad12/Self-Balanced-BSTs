@@ -271,19 +271,19 @@ public class AVL<T extends Comparable<T>> implements Trees<T> {
         return height(root);
     }
 
-    // @Override
-    // public void printdictinory() { 
-    //     System.out.println("Dictionary contents (AVL Tree - in-order traversal):");
-    //     if (root == null) {
-    //         System.out.println("Dictionary is empty");
-    //         return;
-    //     }
+
+    public void printdictinory() { 
+        System.out.println("Dictionary contents (AVL Tree - in-order traversal):");
+        if (root == null) {
+            System.out.println("Dictionary is empty");
+            return;
+        }
         
-    //     System.out.println("Total words: " + size);
-    //     System.out.println("--------------------------------------");
-    //     inorderPrint(root);
-    //     System.out.println("--------------------------------------");
-    // }
+        System.out.println("Total words: " + size);
+        System.out.println("--------------------------------------");
+        inorderPrint(root);
+        System.out.println("--------------------------------------");
+    }
 
     public void inorder() {
         inorderTraversal(root);

@@ -312,7 +312,26 @@ public class RedBlackTree<T extends Comparable<T>> implements Trees<T> {
         return Math.max(height(node.left), height(node.right)) + 1;
     }
 
+    public void printdictinory() { 
+        System.out.println("Dictionary contents (AVL Tree - in-order traversal):");
+        if (root == null) {
+            System.out.println("Dictionary is empty");
+            return;
+        }
+        
+        System.out.println("Total words: " + size);
+        System.out.println("--------------------------------------");
+        inorderPrint(root);
+        System.out.println("--------------------------------------");
+    }
     
+        private void inorderPrint(Node node) {
+        if (node != this.TNULL) {
+            inorderPrint(node.left);
+            System.out.println(node.key);
+            inorderPrint(node.right);
+        }
+    }
 public void inorderTraversal(java.util.function.Consumer<T> consumer) {
     inorderTraversal(root, consumer);
 }
